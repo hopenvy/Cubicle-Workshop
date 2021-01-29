@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 module.exports = (app) => {
     app.engine('hbs', handlebars({
-        extname: 'hbs'
+        extname: 'hbs',
     }));
     
     app.set('view engine', 'hbs');
