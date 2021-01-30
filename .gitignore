@@ -103,3 +103,4 @@ dist
 # TernJS port file
 .tern-port
 03. Cubicle-Workshop-Part-1-Resources.zip
+*.json
