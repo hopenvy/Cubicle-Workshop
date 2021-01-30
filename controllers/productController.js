@@ -14,7 +14,7 @@ router.get('/create', (req, res) => {
 
 router.post('/create', (req, res) => {
 
-    productService.create(req.body)
+    productService.create(req.body);
 
     res.redirect('/products');
 });
