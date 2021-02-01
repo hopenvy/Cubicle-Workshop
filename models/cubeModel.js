@@ -1,5 +1,8 @@
-class Cube {
-    constructor(id, name, description, imageUrl, level) {
+const productsDb = require('../config/database.json');
+const Model = require('./Model');
+
+class Cube extends Model {
+    super(id, name, description, imageUrl, level) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -7,5 +10,8 @@ class Cube {
         this.level = level;
     }
 }
+
+
+
 
 module.exports = Cube;

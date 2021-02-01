@@ -6,7 +6,9 @@ const productsData = require('../data/productData');
 //const { json } = require('body-parser');
 
 function getAll(query) {
-    let result = productsData.getAll();
+    //let result = productsData.getAll();
+    let result = Cube.getAll();
+
     if (query.search) {
         result = result.filter(x => x.name.toLowerCase().includes(query.search));
     }
@@ -21,7 +23,7 @@ function getAll(query) {
 }
 
 function getOne(id) {
-    return productsData.getOne(id);
+    return Cube.getOne(id);
 }
 
 function create(data) {
@@ -34,8 +36,8 @@ function create(data) {
     );
 
 
-    return productData.create(cube);
-
+    //return productData.create(cube);
+return cube.save();
 
 }
 
