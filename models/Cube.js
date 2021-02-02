@@ -20,23 +20,17 @@ const cubeSchema = new mongoose.Schema({
         validate: /^https?/,
     },
     difficultyLeve: {
-        type: Number
+        type: Number,
+        required: true,
+        min: 1,
+        max: 6,
     },
+    accessories: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Accessories'
+    }]
 });
 
-class Cube extends Model {
-    constructor(id, name, description, imageUrl, level) {
-        super()
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.level = level;
-    }
-
-}
 
 
-
-
-module.exports = Cube;
+module.exports = mongoose.model('Cube', cubeSchema);

@@ -9,8 +9,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "handlebars": "^4.7.6",
-    "mongoose": "^5.11.14",
-    "uniqid": "^5.2.0"
+    "mongoose": "^5.11.14"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
