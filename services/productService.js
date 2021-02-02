@@ -1,43 +1,52 @@
-//const uniqid = require('uniqid');
+const Accessories = require('../models/Accessories');
 const Cube = require('../models/Cube');
-const mongoose = require('mongoose');
-const productsData = require('../data/productData');
 
-//const { json } = require('body-parser');
-
-function getAll(query) {
-    let result = productsData.getAll();
-    //let result = Cube.getAll();
-
+async function getAll(query) {
+    let products = await Cube.find({}).lean();
+    
     if (query.search) {
-        result = result.filter(x => x.name.toLowerCase().includes(query.search));
+        products = products.filter(x => x.name.toLowerCase().includes(query.search));
+    }
+    
+    if (query.from) {
+        products = products.filter(x => Number(x.level) >= query.from);
+    }
+    
+    if (query.to) {
+        products = products.filter(x => Number(x.level) <= query.to);
     }
 
-    if (query.from) {
-        result = result.filter(x => Number(x.level) >= query.from)
-    }
-    if (query.to) {
-        result = result.filter(x => Number(x.level) <= query.to)
-    }
-    return result;
+    return products;
 }
 
 function getOne(id) {
-    return productsData.getOne(id);
-    //return Cube.getOne(id);
+    return Cube.findById(id).lean();
+}
+
+function getOneWithAccessories(id) {
+    return Cube.findById(id)
+        .populate('accessories')
+        .lean();
 }
 
 function create(data) {
     let cube = new Cube(data);
 
-
-    //return productData.create(cube);
     return cube.save();
+}
 
+async function attachAccessory(productId, accessoryId) {
+    let product = await Cube.findById(productId)
+    let accessry = await Accessories.findById(accessoryId);
+
+    product.accessories.push(accessories);
+    return product.save();
 }
 
 module.exports = {
     getAll,
     getOne,
-    create
+    getOneWithAccessories,
+    create,
+    attachAccessory,
 }

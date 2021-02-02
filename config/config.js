@@ -1,8 +1,12 @@
-module.exports = {
+const config = {
     development: {
-        port: process.env.PORT || 3000
+        PORT: 5000,
+        DB_CONNECTION: 'mongodb://localhost/cubicle'
     },
     production: {
-        port: 80
+        PORT: 80,
+        DB_CONNECTION: 'insert mongodb atlas connection here'
     }
 };
+
+module.exports = config[process.env.NODE_ENV.trim()]

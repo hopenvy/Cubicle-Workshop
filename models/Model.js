@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 
 const path = require('path');
 const productsDb = require('../config/database.json');
-const productData = require('../data/productData');
+//const productData = require('../data/productData');
 
 class Model {
   
@@ -19,7 +19,7 @@ class Model {
         return productsDb;
     }
     static getOne(id) {
-        return productData.getOne(id);
+        return productsDb.find(x => x.id == id)
     }
 }
 module.exports = Model;
