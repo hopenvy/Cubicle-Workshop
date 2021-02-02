@@ -1,6 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
-const productsDb = require('../config/database.json');
+const productsDb = require('./config/database.json');
 
 module.exports = {
     getAll() {
