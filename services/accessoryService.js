@@ -1,17 +1,17 @@
-const Accessories = require('../models/Accessories');
+const Accessory = require('../models/Accessory');
 
 function getAll() {
-    return Accessories.find().lean();
+    return Accessory.find().lean();
 }
 
 function getAllUnattached(ids) {
-    return Accessories.find({ _id: {$nin: ids} }).lean();
+    return Accessory.find({ _id: {$nin: ids} }).lean();
 }
 
 function create(data) {
-    let accessories = new Accessories(data);
+    let accessory = new Accessory(data);
 
-    return accessories.save();
+    return accessory.save();
 }
 
 module.exports = {
