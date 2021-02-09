@@ -1,5 +1,4 @@
-
-    <main>
+<main>
   <h1>{{product.name}}</h1>
   <img class="cube" src="{{product.imageUrl}}">
   <div class="details">
@@ -12,9 +11,9 @@
   <div class="accessories">
 
     {{#each product.accessories}}
-      {{>accessory}}
+    {{>accessory}}
     {{else}}
-      <h3 class="italic">This cube has no accessories yet...</h3>
+    <h3 class="italic">This cube has no accessories yet...</h3>
     {{/each}}
   </div>
 </main>
