@@ -15,4 +15,10 @@ router.get('*', (req, res) => {
     res.render('404');
 });
 
+//router.post('/register', (req, res) => {
+    
+
+  //  res.redirect('/auth/register');
+//});
+
 module.exports = router;
