@@ -11,6 +11,7 @@ module.exports = function () {
                     res.clearCookie(COOKIE_NAME);
                 } else {
                     req.user = decoded;
+                    res.locals.isAuthenticated = true;
                 }
 
             });

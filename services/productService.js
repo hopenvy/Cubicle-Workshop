@@ -3,15 +3,15 @@ const Cube = require('../models/Cube');
 
 async function getAll(query) {
     let products = await Cube.find({}).lean();
-    
+
     if (query.search) {
         products = products.filter(x => x.name.toLowerCase().includes(query.search));
     }
-    
+
     if (query.from) {
         products = products.filter(x => Number(x.level) >= query.from);
     }
-    
+
     if (query.to) {
         products = products.filter(x => Number(x.level) <= query.to);
     }
@@ -43,10 +43,15 @@ async function attachAccessory(productId, accessoryId) {
     return product.save();
 }
 
+function updateOne(productId, productData) {
+   return Cube.updateOne({_id: productId}, productData);
+}
+
 module.exports = {
     getAll,
     getOne,
     getOneWithAccessories,
     create,
     attachAccessory,
+    updateOne,
 }

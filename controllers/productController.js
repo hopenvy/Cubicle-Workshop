@@ -46,4 +46,21 @@ router.post('/:productId/attach', isAuthenticated, (req, res) => {
         .then(() => res.redirect(`/products/details/${req.params.productId}`))
 });
 
+router.get('/:productId/edit', isAuthenticated, (req, res) => {
+    productService.getOne(req.params.productId)
+        .then(product => {
+            res.render('editCube', product);
+        });
+});
+
+router.post('/:productId/edit', isAuthenticated, (req, res) => {
+    productService.updateOne(req.params.productId, req.body)
+        .then(response => {
+            res.redirect(`/products/details/${req.params.productId}`);
+        })
+        .catch(error => {
+
+        })
+});
+
 module.exports = router;
