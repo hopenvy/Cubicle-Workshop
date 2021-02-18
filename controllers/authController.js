@@ -16,7 +16,7 @@ router.post('/login', async (req, res) => {
     try {
         let token = await authService.login({ username, password });
 
-        res.cookie(COOKIE_NAME, token);
+        res.cookie(COOKIE_NAME , token);
         res.redirect('/products');
     } catch (error) {
         console.log(console.error);
