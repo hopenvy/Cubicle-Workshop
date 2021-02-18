@@ -29,8 +29,8 @@ function getOneWithAccessories(id) {
         .lean();
 }
 
-function create(data) {
-    let cube = new Cube(data);
+function create(data, userId) {
+    let cube = new Cube({...data, creator: userId});
 
     return cube.save();
 }

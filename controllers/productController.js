@@ -23,7 +23,7 @@ router.get('/create', isAuthenticated, (req, res) => {
 });
 
 router.post('/create', isAuthenticated, validateProduct, (req, res) => {
-    productService.create(req.body)
+    productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end())
 });
@@ -53,7 +53,7 @@ router.get('/:productId/edit', isAuthenticated, (req, res) => {
         });
 });
 
-router.post('/:productId/edit', isAuthenticated, (req, res) => {
+router.post('/:productId/edit', isAuthenticated, validateProduct, (req, res) => {
     productService.updateOne(req.params.productId, req.body)
         .then(response => {
             res.redirect(`/products/details/${req.params.productId}`);
