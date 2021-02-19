@@ -63,4 +63,21 @@ router.post('/:productId/edit', isAuthenticated, validateProduct, (req, res) => 
         })
 });
 
+router.get('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.getOne(req.params.productId)
+        .then(product => {
+            if(req.user._id != product.creator){
+                res.redirect('/products');
+            } else {
+            res.render('deleteCube', product);
+            }
+        });
+
+});
+
+router.post('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.deleteOne(req.params.productId)
+        .then(response => res.redirect('/products'));
+});
+
 module.exports = router;
