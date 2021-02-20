@@ -10,9 +10,9 @@
 
             <label for="repeatPassword">Re-Password</label>
             <input type="password" id="repeatPassword" name="repeatPassword">
-            {{#if error}}
-            <span class="error">{{error.message}}</span>
-            {{/if}}
+            {{#each errors}}
+            <span class="error">{{msg}}</span>
+            {{/each}}
             <input type="submit" value="Register">
         </form>
     </div>
