@@ -211,7 +211,12 @@ div.form {
     width: 36%;
     margin: auto;
 }
-
+#notification-message {
+    background: black;
+    color: #EF5542;
+    padding: 10px;
+    margin-top: 20px;
+}
 span.error {
     animation: fadeOut 1s forwards;
     animation-delay: 2s;
@@ -228,6 +233,7 @@ span.error {
     overflow: hidden;
     display: block;
 }
+
 
 img#sadFaceImg{
     display: block;

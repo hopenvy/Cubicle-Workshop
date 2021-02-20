@@ -2,7 +2,6 @@
 const { Router } = require('express');
 
 const isAuthenticated = require('../middlewares/isAuthenticated');
-const isGuest = require('../middlewares/isGuest');
 
 const productService = require('../services/productService');
 const accessoryService = require('../services/accessoryService');
@@ -22,11 +21,13 @@ router.get('/create', isAuthenticated, (req, res) => {
     res.render('create', { title: 'Create' });
 });
 
-router.post('/create', isAuthenticated, validateProduct, (req, res) => {
+router.post('/create', isAuthenticated, (req, res, next) => {
     productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
-        .catch(() => res.status(500).end())
+        // .catch(() => res.status(500).end())
+        .catch(next)
 });
+
 
 router.get('/details/:productId', async (req, res) => {
     let product = await productService.getOneWithAccessories(req.params.productId);
@@ -57,26 +58,29 @@ router.post('/:productId/edit', isAuthenticated, validateProduct, (req, res) => 
     productService.updateOne(req.params.productId, req.body)
         .then(response => {
             res.redirect(`/products/details/${req.params.productId}`);
-        })
-        .catch(error => {
-
-        })
+        });
 });
 
 router.get('/:productId/delete', isAuthenticated, (req, res) => {
     productService.getOne(req.params.productId)
         .then(product => {
-            if(req.user._id != product.creator){
-                res.redirect('/products');
+            if (req.user._id != product.creator) {
+                res.redirect('/products')
             } else {
-            res.render('deleteCube', product);
+                res.render('deleteCube', product);
             }
         });
-
 });
 
 router.post('/:productId/delete', isAuthenticated, (req, res) => {
-    productService.deleteOne(req.params.productId)
+    productService.getOne(req.params.productId)
+        .then(product => {
+            if (product._id !== req.user._id) {
+                return res.redirect('/products');
+            }
+
+            return productService.deleteOne(req.params.productId)
+        })
         .then(response => res.redirect('/products'));
 });
 

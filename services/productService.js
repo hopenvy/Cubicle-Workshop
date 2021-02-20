@@ -47,7 +47,7 @@ function updateOne(productId, productData) {
    return Cube.updateOne({_id: productId}, productData);
 }
 
-function deleteOne (productId, productData) {
+function deleteOne (productId) {
     return Cube.deleteOne({_id: productId});
 }
 

@@ -1,14 +1,12 @@
-const { Router } = require('express');
-const router = Router();
+const router = require('express').Router();
+const authService = require('../services/authService');
 const validator = require('validator');
 const { body, validationResult } = require('express-validator');
 
-const authService = require('../services/authService');
-const isAuthenticated = require('../middlewares/isAuthenticated');
 const isGuest = require('../middlewares/isGuest');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 
-
-const { COOKIE_NAME } = require('../config/config')
+const { COOKIE_NAME } = require('../config/config');
 
 router.get('/login', isGuest, (req, res) => {
     res.render('login');
@@ -23,7 +21,6 @@ router.post('/login', isGuest, async (req, res) => {
         res.cookie(COOKIE_NAME, token);
         res.redirect('/products');
     } catch (error) {
-        console.log(console.error);
         res.render('login', { error });
     }
 });
@@ -44,39 +41,37 @@ const isStrongPasswordMiddleware = (req, res, next) => {
     });
 
     if (!isStrongPassword) {
-        return res.render('register', { error: { message: 'You should have strong password!' }, username: req.body });
+        return res.render('register', { error: {message: 'You should have strong password'}, username: req.body.username });
     }
+
     next();
 }
 
-router.post('/register',
-    isGuest,
-    //isStrongPasswordMiddleware,
-    body('username', 'Specify username').notEmpty(),
-    body('password', 'Password too short').isLength({ min: 5 }),
+router.post(
+    '/register', 
+    isGuest, 
+    // isStrongPasswordMiddleware,
+    // body('email', 'Your email is not valid').isEmail().normalizeEmail(),
+    // body('username', 'Specify username').notEmpty(),
+    // body('password', 'Password too short').isLength({min: 5}),
     async (req, res) => {
-        const { username, password, repeatPassword } = req.body
+        const { username, password, repeatPassword } = req.body;
 
         if (password !== repeatPassword) {
-            res.render('register', { message: 'Password missmatch!' });
-            return;
-        }
-
-        let errors = validationResult(req);
-        if (errors.errors.length > 0) {
-            return res.render('register', errors );
+            return res.render('register', { error: {message: 'Password missmatch!'} });
         }
 
         try {
             let user = await authService.register({ username, password });
 
             res.redirect('/auth/login');
-
-        } catch (error) {
+        } catch (err) {
+            let error = Object.keys(err?.errors).map(x => ({ message: err.errors[x].properties.message}))[0];
+            // console.log(errors);
             res.render('register', { error });
         }
-
-    });
+    }
+);
 
 router.get('/logout', isAuthenticated, (req, res) => {
     res.clearCookie(COOKIE_NAME);
