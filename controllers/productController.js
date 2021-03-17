@@ -3,7 +3,7 @@ const { Router } = require('express');
 
 const isAuthenticated = require('../middlewares/isAuthenticated');
 
-const productService = require('../services/productService');
+
 const accessoryService = require('../services/accessoryService');
 const { validateProduct } = require('./helpers/productHelpers');
 

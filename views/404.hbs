@@ -1,9 +1,11 @@
-
-        <main>
-            <img id="sadFaceImg"
-                src="https://thumbs.dreamstime.com/b/sad-face-emoji-vector-icon-symbol-web-mobile-app-175179803.jpg"
-                alt="sad face" />
-            <h1>404</h1>
-            <h2>Page not found</h2>
-        </main>
-    
+<main>
+    {{#if error}}
+    <span class="error">{{error.message}}</span>
+    {{else}}
+    <img id="sadFaceImg"
+        src="https://thumbs.dreamstime.com/b/sad-face-emoji-vector-icon-symbol-web-mobile-app-175179803.jpg"
+        alt="sad face" />
+    <h1>404</h1>
+    <h2>Page not found</h2>
+    {{/if}}
+</main>
